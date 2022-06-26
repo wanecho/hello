@@ -41,8 +41,18 @@ class IptoCityWhenPosted implements ShouldQueue
         if (!$this->post->exists) {
             return;
         }
-        $this->post->ip_city = "Test";
+        $this->post->ip_city = $this->getIpcity($this->post->ip_address);
         $this->post->save();
+    }
+
+    private function getIpcity($ip){
+        $url = 'http://ip-api.com/json/'.$ip.'?lang=zh-CN';
+        $result =  file_get_contents($url);
+        $result =  json_decode($result,true);
+        if($result['status'] == 'success'){
+            return $result['city'];
+        }
+        return ""; 
     }
 }
 

@@ -1,16 +1,27 @@
 <?php
-
 /*
- * This file is part of blomstra/post-by-mail.
+ * This file is part of fof/best-answer.
  *
- * Copyright (c) 2022 Blomstra Ltd.
+ * Copyright (c) FriendsOfFlarum.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-use Flarum\Database\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Schema\Builder;
 
-return Migration::addColumns('posts', [
-    'ip_city' => ['string', 'length' => 100, 'nullable' => true],
-]);
+return [
+    'up' => function (Builder $schema) {
+        if (!$schema->hasColumn('posts', 'ip_city')) {
+            $schema->table('posts', function (Blueprint $table) {
+                $table->string('ip_city',100)->nullable();
+            });
+        }
+    },
+    'down' => function (Builder $schema) {
+        $schema->table('posts', function (Blueprint $table) {
+            $table->dropColumn('ip_city');
+        });
+    },
+];
