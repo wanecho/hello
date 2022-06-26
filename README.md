@@ -1,4 +1,4 @@
-# Echo Hello
+# Wanecho Hello
 
 ![License](https://img.shields.io/badge/license-MIT-CMU-blue.svg) [![Latest Stable Version](https://img.shields.io/packagist/v/echo/hello.svg)](https://packagist.org/packages/echo/hello) [![Total Downloads](https://img.shields.io/packagist/dt/echo/hello.svg)](https://packagist.org/packages/echo/hello)
 
@@ -9,13 +9,13 @@ A [Flarum](http://flarum.org) extension. hello world
 Install with composer:
 
 ```sh
-composer require echo/hello:"*"
+composer require wanecho/hello:"*"
 ```
 
 ## Updating
 
 ```sh
-composer update echo/hello:"*"
+composer update wanecho/hello:"*"
 php flarum migrate
 php flarum cache:clear
 ```
