@@ -10,7 +10,8 @@ app.initializers.add('echo/hello', () => {
   Post.prototype.ip_city = Model.attribute('ip_city');
   extend(CommentPost.prototype, 'headerItems', function(this:CommentPost,items:ItemList)  {
     const post = this.attrs.post;
-    items.add('city', m('.PostMeta',post.ip_city()||''));
+    const ipcity = post.ip_city()||'';
+    items.add('city', m('.PostMeta',ipcity?"IP来自" + ipcity:''));
   });
 
   Fancybox.defaults.Image = { zoom: false };
