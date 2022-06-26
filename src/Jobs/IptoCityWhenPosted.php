@@ -58,7 +58,7 @@ class IptoCityWhenPosted implements ShouldQueue
         $result =  file_get_contents($url,false,$context);
         $result =  json_decode($result,true);
         if($result['message'] == 'Success'){
-           return $result['data']['details']['city'];
+           return $result['data']['details']['city']?$result['data']['details']['city']:$result['data']['details']['region'];
         }
         return ""; 
     }
