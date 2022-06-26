@@ -3799,7 +3799,7 @@ flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().initializers.add('echo/h
   (0,flarum_common_extend__WEBPACK_IMPORTED_MODULE_1__.extend)((flarum_forum_components_CommentPost__WEBPACK_IMPORTED_MODULE_2___default().prototype), 'headerItems', function (items) {
     var post = this.attrs.post;
     var ipcity = post.ip_city() || '';
-    items.add('city', m('.PostMeta', ipcity ? "IP来自" + ipcity : ''));
+    items.add('city', m('.PostMeta', ipcity ? "IP来自:" + ipcity : ''));
   });
   _fancyapps_ui__WEBPACK_IMPORTED_MODULE_3__.Fancybox.defaults.Image = {
     zoom: false
