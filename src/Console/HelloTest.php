@@ -17,25 +17,26 @@ class HelloTest extends AbstractCommand
 
     protected function fire()
     {   
-        // $ip = '114.101.232.16';
-        // $res =  Post::where('ip_address',$ip)->groupBy('ip_address')->first();
-        // if(!empty($res->ip_city)){
-        //     print_r($res->ip_city);
-        // }
-        //http://ip-api.com/json/24.28.24.176?lang=zh-CN
-        $rows =  Post::whereNull('ip_city')->groupBy('ip_address')->orderBy('id', 'desc')->get();
-        foreach( $rows as $row ){
-           echo $city =  $this->getcity($row->ip_address);
-           if(!empty($city)){
-                Post::where('ip_address',$row->ip_address)->update(['ip_city'=>$city]);
-           }
-        }
+        // $ip = '223.104.150.34';
+        // $ipdata =  IpLocation::getLocation($ip);
+        // print_r(!empty($ipdata['city'])?$ipdata['city']:$ipdata['country']);
+        // die();
+        Post::whereNull('ip_city')->where('type','comment')->groupBy('ip_address')->orderBy('id', 'desc')->chunk(200, function ($rows) {
+            foreach( $rows as $row ){
+               $city =  $this->getcity($row->ip_address);
+               if(!empty($city)){
+                    Post::where('ip_address',$row->ip_address)->update(['ip_city'=>$city]);
+               }
+            }
+            echo "处理200个\n";
+        });
+
     }
 
     private function getcity($ip){
         $ipdata =  IpLocation::getLocation($ip);
         if(!isset($ipdata['error'])){
-            return $ipdata['city'];
+            return !empty($ipdata['city'])?$ipdata['city']:$ipdata['country'];
         }
         return "";
     }

@@ -53,7 +53,8 @@ class IptoCityWhenPosted implements ShouldQueue
         }
         $ipdata =  IpLocation::getLocation($ip);
         if(!isset($ipdata['error'])){
-            return $ipdata['city'];
+            //如果城市不存在就显示国家
+            return !empty($ipdata['city'])?$ipdata['city']:$ipdata['country'];
         }
         return "";
     }
