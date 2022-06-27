@@ -24,4 +24,6 @@ return [
     new Extend\Locales(__DIR__.'/locale'),
     (new Extend\Event())->subscribe(Listeners\QueueIptoCityJobs::class),
     (new Extend\ApiSerializer(PostSerializer::class))->attributes(AddPostAttributes::class),
+    (new Extend\Console())
+        ->command(Console\HelloTest::class),
 ];

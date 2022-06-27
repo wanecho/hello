@@ -46,6 +46,10 @@ class IptoCityWhenPosted implements ShouldQueue
     }
 
     private function getIpcity($ip){
+        $res =  Post::where('ip_address',$ip)->first();
+        if(!empty($res->ip_city)){
+            return $res->ip_city;
+        }
         $hdrs = [
             'http'=>[
                 'header'=>
@@ -60,7 +64,7 @@ class IptoCityWhenPosted implements ShouldQueue
         if($result['message'] == 'Success'){
            return $result['data']['details']['city']?$result['data']['details']['city']:$result['data']['details']['region'];
         }
-        return ""; 
+        return "";
     }
 }
 
