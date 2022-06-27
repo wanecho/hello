@@ -19,6 +19,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Flarum\Post\Post;
+use itbdw\Ip\IpLocation;
 
 class IptoCityWhenPosted implements ShouldQueue
 {
@@ -50,19 +51,9 @@ class IptoCityWhenPosted implements ShouldQueue
         if(!empty($res->ip_city)){
             return $res->ip_city;
         }
-        $hdrs = [
-            'http'=>[
-                'header'=>
-                    "Accept:application/json;charset=UTF-8\r\n" .
-                    "X-Bce-Signature:AppCode/642e466cc32c423fa34faf56916cd485"
-            ]
-        ];
-        $context = stream_context_create($hdrs);
-        $url    = 'http://gwgp-dd3tdfvrfcw.n.bdcloudapi.com?ip='.$ip;
-        $result =  file_get_contents($url,false,$context);
-        $result =  json_decode($result,true);
-        if($result['message'] == 'Success'){
-           return $result['data']['details']['city']?$result['data']['details']['city']:$result['data']['details']['region'];
+        $ipdata =  IpLocation::getLocation($ip);
+        if(!isset($ipdata['error'])){
+            return $ipdata['city'];
         }
         return "";
     }
